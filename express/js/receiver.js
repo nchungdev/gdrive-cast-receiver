@@ -61,6 +61,7 @@ const LOG_RECEIVER_TAG = "Receiver";
  * top left corner and show debug overlay.
  */
 context.addEventListener(cast.framework.system.EventType.READY, () => {
+  console.debug("Cast ready");
   if (!castDebugLogger.debugOverlayElement_) {
     /**
      *  Enable debug logger and show a 'DEBUG MODE' tag at
@@ -101,6 +102,7 @@ castDebugLogger.loggerLevelByTags[LOG_RECEIVER_TAG] =
 playerManager.addEventListener(
   cast.framework.events.EventType.ERROR,
   (event) => {
+    console.debug("Cast event=" + event);
     castDebugLogger.error(
       LOG_RECEIVER_TAG,
       "Detailed Error Code - " + event.detailedErrorCode
@@ -294,11 +296,12 @@ castReceiverOptions.uiConfig = {
 context.addCustomMessageListener(
   "urn:x-cast:com.zing.mp3",
   function (customEvent) {
-    console.log("event=" + customEvent);
+    console.debug("event=" + customEvent);
     if (customEvent.data.type == "message") {
       console.log("message=" + customEvent.data.text);
     }
   }
 );
+context.addEventListener;
 context.start(castReceiverOptions);
-showToast("Start Cast");
+console.debug("Start cast receiver");
