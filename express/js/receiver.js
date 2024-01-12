@@ -20,7 +20,7 @@ import { CastQueue } from "./queuing.js";
 import { MediaFetcher } from "./media_fetcher.js";
 import { AdsTracker, SenderTracker, ContentTracker } from "./cast_analytics.js";
 
-function showToast(msg + "\n") {
+function showToast(msg) {
   var x = document.getElementById("snackbar");
   x.className = "show";
   x.innerHTML = msg;
