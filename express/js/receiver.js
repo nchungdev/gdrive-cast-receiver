@@ -269,3 +269,4 @@ castReceiverOptions.uiConfig = {
 // castReceiverOptions.queue = new CastQueue();
 context.start(castReceiverOptions);
 showToast("Start Cast Receiver");
+showContent("\nOptionally enable a custom queue implementation. Custom queues allow the")

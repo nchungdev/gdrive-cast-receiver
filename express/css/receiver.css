@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .text {
-  max-width: 30%;
+  max-width: 100px;
   padding-top: 40px;
   padding-bottom: 40px;
   color: #fff;
