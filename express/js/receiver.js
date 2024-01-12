@@ -29,6 +29,10 @@ function showToast(msg) {
   }, 3000);
 }
 
+function showContent(msg) {
+  document.getElementById("content").innerHTML = msg;
+}
+
 /**
  * @fileoverview This sample demonstrates how to build your own Web Receiver for
  * use with Google Cast. The main receiver implementation is provided in this
@@ -61,7 +65,7 @@ const LOG_RECEIVER_TAG = "Receiver";
  * top left corner and show debug overlay.
  */
 context.addEventListener(cast.framework.system.EventType.ALL, (event) => {
-  showToast("Event change "+ JSON.stringify(event));
+  showContent("Event change " + JSON.stringify(event));
 });
 /*
  * Set verbosity level for Core events.
