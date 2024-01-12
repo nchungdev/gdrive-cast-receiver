@@ -264,14 +264,5 @@ castReceiverOptions.uiConfig = {
  * line below to enable the queue.
  */
 // castReceiverOptions.queue = new CastQueue();
-context.addCustomMessageListener(
-  "urn:x-cast:com.zing.mp3",
-  function (customEvent) {
-    showToast("event=" + customEvent);
-    if (customEvent.data.type == "message") {
-      showToast("message=" + customEvent.data.text);
-    }
-  }
-);
 context.start(castReceiverOptions);
 showToast("Start Cast Receiver");
