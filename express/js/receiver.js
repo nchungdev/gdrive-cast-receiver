@@ -36,6 +36,53 @@ function showContent(msg) {
   document.getElementById("content").innerHTML += msg + "\n";
 }
 
+
+var castReceiverManager = null;
+var messageBus = null;
+
+function initializeCast() {
+  castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+
+  castReceiverManager.onReady = function(evt) {
+    log('onReady / data: ' + JSON.stringify(evt.data));
+    window.castReceiverManager.setApplicationState('application status: onready');
+  }
+
+  castReceiverManager.onSenderConnected = function(evt) {
+    log('onSenderConnected / data: ' + JSON.stringify(evt.data) + ' / userAgent: ' + window.castReceiverManager.getSender(evt.data).userAgent);
+  }
+
+  castReceiverManager.onSenderDisconnected = function(evt) {
+    log('onSenderDisconnected / data: ' + JSON.stringify(evt.data));
+    if (window.castReceiverManager.getSenders().length == 0) {
+      log('close window.');
+      window.close();
+    }
+  }
+
+  castReceiverManager.onSystemVolumeChanged = function(evt) {
+    log('onSystemVolumeChanged / data: ' + JSON.stringify(evt.data));
+  }
+
+  messageBus = window.castReceiverManager.getCastMessageBus(googleCastConf.namespace);
+
+  messageBus.onMessage = function(evt) {
+    log('onMessage / from: ' + evt.senderId + ' / data: ' + JSON.stringify(evt.data));
+    receiveMessage(evt.senderId, evt.data);
+  }
+
+  log('receiver manager started.');
+  window.castReceiverManager.start({statusText: 'application status: starting'});
+
+}
+
+function receiveMessage(id, data) {
+}
+
+function sendMessage(id, data) {
+  messageBus.send(id, data);
+}
+
 /**
  * @fileoverview This sample demonstrates how to build your own Web Receiver for
  * use with Google Cast. The main receiver implementation is provided in this
@@ -69,10 +116,8 @@ const LOG_RECEIVER_TAG = "Receiver";
  */
 context.addEventListener(cast.framework.system.EventType.ALL, (event) => {
   showContent("CastEvent change " + JSON.stringify(event));
-  var castSession =
-    cast.framework.CastContext.getInstance().getCurrentSession();
   // Send message on defined namespace channel
-  castSession.sendMessage("urn:x-cast:com.zing.mp3", "message");
+  // castSession.sendMessage("urn:x-cast:com.zing.mp3.error", JSON.stringify(event));
 });
 /*
  * Set verbosity level for Core events.
@@ -272,4 +317,6 @@ castReceiverOptions.uiConfig = {
  */
 // castReceiverOptions.queue = new CastQueue();
 context.start(castReceiverOptions);
+
+initializeCast();
 showToast("Start Cast Receiver");
