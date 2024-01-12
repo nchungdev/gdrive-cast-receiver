@@ -30,6 +30,9 @@ function showToast(msg) {
 }
 
 function showContent(msg) {
+  if (document.getElementById("content").innerHTML.length > 500) {
+    document.getElementById("content").innerHTML = "";
+  }
   document.getElementById("content").innerHTML += msg + "\n";
 }
 
@@ -65,7 +68,7 @@ const LOG_RECEIVER_TAG = "Receiver";
  * top left corner and show debug overlay.
  */
 context.addEventListener(cast.framework.system.EventType.ALL, (event) => {
-  showContent("Event change " + JSON.stringify(event));
+  showContent("CastEvent change " + JSON.stringify(event));
 });
 /*
  * Set verbosity level for Core events.
