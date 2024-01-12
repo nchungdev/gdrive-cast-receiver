@@ -91,7 +91,7 @@ castDebugLogger.loggerLevelByTags[LOG_RECEIVER_TAG] =
  * Example of how to listen for events on playerManager.
  */
 playerManager.addEventListener(cast.framework.events.EventType.ALL, (event) => {
-  showToast("Player event=" + JSON.stringify(event));
+  showContent("Player event=" + JSON.stringify(event));
 });
 
 /*
@@ -145,10 +145,7 @@ function addBreaks(mediaInformation) {
 playerManager.setMessageInterceptor(
   cast.framework.messages.MessageType.LOAD,
   (loadRequestData) => {
-    castDebugLogger.debug(
-      LOG_RECEIVER_TAG,
-      `loadRequestData: ${JSON.stringify(loadRequestData)}`
-    );
+    showContent(`loadRequestData: ${JSON.stringify(loadRequestData)}`);
 
     // If the loadRequestData is incomplete, return an error message.
     if (!loadRequestData || !loadRequestData.media) {
@@ -184,15 +181,12 @@ playerManager.setMessageInterceptor(
           // If the source is a url that points to an asset don't fetch from the
           // content repository.
           if (sourceId.includes(".")) {
-            castDebugLogger.debug(
-              LOG_RECEIVER_TAG,
-              "Interceptor received full URL"
-            );
+            showContent("Interceptor received full URL" + source);
             loadRequestData.media.contentUrl = source;
             return loadRequestData;
           } else {
             // Fetch the contentUrl if provided an ID or entity URL.
-            castDebugLogger.debug(LOG_RECEIVER_TAG, "Interceptor received ID");
+            showContent("Interceptor received ID");
             return MediaFetcher.fetchMediaInformationById(sourceId).then(
               (mediaInformation) => {
                 loadRequestData.media = mediaInformation;
