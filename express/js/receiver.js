@@ -100,20 +100,9 @@ castDebugLogger.loggerLevelByTags[LOG_RECEIVER_TAG] =
  * Example of how to listen for events on playerManager.
  */
 playerManager.addEventListener(
-  cast.framework.events.EventType.ERROR,
+  cast.framework.events.EventType.ALL,
   (event) => {
-    showToast("Cast event=" + event);
-    castDebugLogger.error(
-      LOG_RECEIVER_TAG,
-      "Detailed Error Code - " + event.detailedErrorCode
-    );
-    if (event && event.detailedErrorCode == 905) {
-      castDebugLogger.error(
-        LOG_RECEIVER_TAG,
-        "LOAD_FAILED: Verify the load request is set up " +
-          "properly and the media is able to play."
-      );
-    }
+    showToast("Player event=" + event.detailedErrorCode);
   }
 );
 
