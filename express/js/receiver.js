@@ -60,22 +60,9 @@ const LOG_RECEIVER_TAG = "Receiver";
  * Uncomment below line to enable debug logger, show a 'DEBUG MODE' tag at
  * top left corner and show debug overlay.
  */
-context.addEventListener(cast.framework.system.EventType.READY, () => {
-  showToast("Cast ready");
-  if (!castDebugLogger.debugOverlayElement_) {
-    /**
-     *  Enable debug logger and show a 'DEBUG MODE' tag at
-     *  top left corner.
-     */
-    castDebugLogger.setEnabled(true);
-
-    /**
-     * Show debug overlay.
-     */
-    castDebugLogger.showDebugLogs(true);
-  }
+context.addEventListener(cast.framework.system.EventType.ALL, (event) => {
+  showToast("Event change "+ JSON.stringify(event));
 });
-
 /*
  * Set verbosity level for Core events.
  */
@@ -99,12 +86,9 @@ castDebugLogger.loggerLevelByTags[LOG_RECEIVER_TAG] =
 /*
  * Example of how to listen for events on playerManager.
  */
-playerManager.addEventListener(
-  cast.framework.events.EventType.ALL,
-  (event) => {
-    showToast("Player event=" + event.detailedErrorCode);
-  }
-);
+playerManager.addEventListener(cast.framework.events.EventType.ALL, (event) => {
+  showToast("Player event=" + JSON.stringify(event));
+});
 
 /*
  * Example analytics tracking implementation. To enable this functionality see
