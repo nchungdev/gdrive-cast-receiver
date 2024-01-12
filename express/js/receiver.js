@@ -69,6 +69,10 @@ const LOG_RECEIVER_TAG = "Receiver";
  */
 context.addEventListener(cast.framework.system.EventType.ALL, (event) => {
   showContent("CastEvent change " + JSON.stringify(event));
+  var castSession =
+    cast.framework.CastContext.getInstance().getCurrentSession();
+  // Send message on defined namespace channel
+  castSession.sendMessage("urn:x-cast:com.zing.mp3", "message");
 });
 /*
  * Set verbosity level for Core events.
@@ -269,4 +273,3 @@ castReceiverOptions.uiConfig = {
 // castReceiverOptions.queue = new CastQueue();
 context.start(castReceiverOptions);
 showToast("Start Cast Receiver");
-showContent("\nOptionally enable a custom queue implementation. Custom queues allow the")
