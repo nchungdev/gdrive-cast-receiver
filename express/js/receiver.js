@@ -20,7 +20,7 @@ import { CastQueue } from "./queuing.js";
 import { MediaFetcher } from "./media_fetcher.js";
 import { AdsTracker, SenderTracker, ContentTracker } from "./cast_analytics.js";
 
-function showToast(msg) {
+function showToast(msg + "\n") {
   var x = document.getElementById("snackbar");
   x.className = "show";
   x.innerHTML = msg;
@@ -30,7 +30,7 @@ function showToast(msg) {
 }
 
 function showContent(msg) {
-  document.getElementById("content").innerHTML = msg;
+  document.getElementById("content").innerHTML += msg + "\n";
 }
 
 /**
