@@ -20,6 +20,13 @@ import { CastQueue } from "./queuing.js";
 import { MediaFetcher } from "./media_fetcher.js";
 import { AdsTracker, SenderTracker, ContentTracker } from "./cast_analytics.js";
 
+function showToast(msg) {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  x.innerHTML = msg;
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
 /**
  * @fileoverview This sample demonstrates how to build your own Web Receiver for
  * use with Google Cast. The main receiver implementation is provided in this
@@ -284,3 +291,4 @@ castReceiverOptions.uiConfig = {
 // castReceiverOptions.queue = new CastQueue();
 
 context.start(castReceiverOptions);
+showToast("Start Cast");
