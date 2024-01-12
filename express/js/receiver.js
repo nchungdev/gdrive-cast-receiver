@@ -24,7 +24,9 @@ function showToast(msg) {
   var x = document.getElementById("snackbar");
   x.className = "show";
   x.innerHTML = msg;
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+  }, 3000);
 }
 
 /**
@@ -58,18 +60,18 @@ const LOG_RECEIVER_TAG = "Receiver";
  * Uncomment below line to enable debug logger, show a 'DEBUG MODE' tag at
  * top left corner and show debug overlay.
  */
- context.addEventListener(cast.framework.system.EventType.READY, () => {
+context.addEventListener(cast.framework.system.EventType.READY, () => {
   if (!castDebugLogger.debugOverlayElement_) {
     /**
      *  Enable debug logger and show a 'DEBUG MODE' tag at
      *  top left corner.
      */
-      castDebugLogger.setEnabled(true);
+    castDebugLogger.setEnabled(true);
 
     /**
      * Show debug overlay.
      */
-      castDebugLogger.showDebugLogs(true);
+    castDebugLogger.showDebugLogs(true);
   }
 });
 
@@ -289,6 +291,14 @@ castReceiverOptions.uiConfig = {
  * line below to enable the queue.
  */
 // castReceiverOptions.queue = new CastQueue();
-
+context.addCustomMessageListener(
+  "urn:x-cast:com.zing.mp3",
+  function (customEvent) {
+    console.log("event=" + customEvent);
+    if (customEvent.data.type == "message") {
+      console.log("message=" + customEvent.data.text);
+    }
+  }
+);
 context.start(castReceiverOptions);
 showToast("Start Cast");
